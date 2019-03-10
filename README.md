@@ -60,6 +60,25 @@ docker run --rm -it \
     feydan/ansible site.yml
 ```
 
+## Additional keys and host vars
+I sometimes keep my host vars and other ssh keys in a separate project than my playbooks and variables.  I created the bin2 directory as an alternative so that you can mount these directories as volumes and not have to include sensitive data in the same project as your playbooks.
+
+To use bin2, create the following volumes:
+
+Replace <local hostvars directory>
+```
+docker volume create --driver local --opt type=none --opt device=<local hostvars directory> --opt o=bind hosts_volume
+```
+
+Replace <local pems directory>
+```
+docker volume create --driver local --opt type=none --opt device=<local pems directory> --opt o=bind pems_volume
+```
+
+More volumes can be added in the same way by creating local volumes and modifying ansible-docker to mount them
+
+Then instead of exporting the bin folder to your path, export bin2.
+
 ## Ansible Vault
 
 If you've encrypted any data using [Ansible Vault](http://docs.ansible.com/ansible/playbooks_vault.html), you can decrypt during a play by either passing **--ask-vault-pass** after the playbook name, or pointing to a password file. For the latter, you can mount an external file in bin/ansible-docker:
