@@ -9,7 +9,7 @@ docker build -t feydan/ansible .
 
 EXPORT PATH="$PATH:$(pwd)/bin"
 ```
-You can add this export line to your ~/.bashrc or ~/.bash_profile to have `ansible` and `ansible-playbook` available in new terminals
+You can add this export line (make sure to replace $(pwd) with the full directory path) to your ~/.bashrc or ~/.bash_profile to have `ansible` and `ansible-playbook` available in new terminals from any directory.
 
 ### Test
 
