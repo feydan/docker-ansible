@@ -46,12 +46,7 @@ RUN set -x && \
     \
     echo "==> Cleaning up..."  && \
     apk del build-dependencies && \
-    rm -rf /var/cache/apk/* && \
-    \
-    echo "==> Adding hosts for convenience..."  && \
-    mkdir -p /etc/ansible /ansible && \
-    echo "[local]" >> /etc/ansible/hosts && \
-    echo "localhost" >> /etc/ansible/hosts
+    rm -rf /var/cache/apk/*
 
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
@@ -62,6 +57,6 @@ ENV PYTHONPATH /ansible/lib
 ENV PATH /ansible/bin:$PATH
 ENV ANSIBLE_LIBRARY /ansible/library
 
-WORKDIR /ansible/playbooks
+WORKDIR /ansible/project
 
-ENTRYPOINT ["ansible-playbook"]
+CMD ["ansible-playbook"]
