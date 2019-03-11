@@ -1,6 +1,6 @@
-FROM alpine:3.7
+FROM alpine:edge
 
-ENV ANSIBLE_VERSION 2.5.0
+ENV ANSIBLE_VERSION 2.7.0
 
 ENV BUILD_PACKAGES \
   bash \
@@ -17,11 +17,13 @@ ENV BUILD_PACKAGES \
   py-paramiko \
   py-pip \
   py-yaml \
-  ca-certificates
+  ca-certificates \
+  py-boto3 \
+  py-botocore
 
 # If installing ansible@testing
-#RUN \
-#	echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> #/etc/apk/repositories
+RUN \
+	echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN set -x && \
     \
@@ -51,7 +53,7 @@ RUN set -x && \
 ENV ANSIBLE_GATHERING smart
 ENV ANSIBLE_HOST_KEY_CHECKING false
 ENV ANSIBLE_RETRY_FILES_ENABLED false
-ENV ANSIBLE_ROLES_PATH /ansible/playbooks/roles
+ENV ANSIBLE_ROLES_PATH /ansible/project/roles
 ENV ANSIBLE_SSH_PIPELINING True
 ENV PYTHONPATH /ansible/lib
 ENV PATH /ansible/bin:$PATH

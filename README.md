@@ -61,13 +61,13 @@ docker run --rm -it \
 ```
 
 ## Additional keys and host vars
-I sometimes keep my host vars and other ssh keys in a separate project than my playbooks and variables.  I created the bin2 directory as an alternative so that you can mount these directories as volumes and not have to include sensitive data in the same project as your playbooks.
+I sometimes keep my sensitive inventory host vars and other ssh keys in a separate project than my playbooks and variables.  I created the bin2 directory as an alternative so that you can mount these directories as volumes and not have to include sensitive data in the same project as your playbooks.
 
 To use bin2, create the following volumes:
 
-Replace <local hostvars directory>
+Replace <local inventory directory>
 ```
-docker volume create --driver local --opt type=none --opt device=<local hostvars directory> --opt o=bind hosts_volume
+docker volume create --driver local --opt type=none --opt device=<local inventory directory> --opt o=bind inventory_volume
 ```
 
 Replace <local pems directory>
