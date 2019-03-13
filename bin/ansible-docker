@@ -6,4 +6,4 @@ shift
 docker run --rm -it \
   -v $(pwd):/ansible/project \
   -v /var/log/ansible/ansible.log \
-  feydan/ansible "$ansible_command" "$@"
+  feydan/docker-ansible "$ansible_command" "$@"

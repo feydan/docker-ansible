@@ -5,7 +5,7 @@ Docker Image of Ansible for executing ansible commands against an externally mou
 ## Build
 
 ```
-docker build -t feydan/ansible .
+docker build -t feydan/docker-ansible .
 
 EXPORT PATH="$PATH:$(pwd)/bin"
 ```

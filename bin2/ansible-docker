@@ -26,6 +26,6 @@ cmd="docker run --rm -it"
 [ ! -z $(docker volume ls --filter 'name=inventory_volume' -q) ] && \
     cmd="${cmd} -v inventory_volume:/inventory"
 
-cmd="${cmd} feydan/ansible ${ansible_command} ${@}"
+cmd="${cmd} feydan/docker-ansible ${ansible_command} ${@}"
 
 eval $cmd
