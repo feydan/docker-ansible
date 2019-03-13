@@ -3,11 +3,29 @@
 ansible_command="$1"
 shift
 
-docker run --rm -it \
-  -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
-  -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
-  -v pems_volume:/pems \
-  -v hosts_volume:/hosts \
-  -v $(pwd):/ansible/project \
-  -v /var/log/ansible/ansible.log \
-  feydan/ansible "$ansible_command" "$@"
+cmd="docker run --rm -it"
+
+# ssh support
+[ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ] && \
+    cmd="${cmd} -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub"
+
+# aws support
+[ -f ~/.aws/credentials ] && \
+    cmd="${cmd} -v ~/.aws/credentials:/root/.aws/credentials"
+
+# vault password support
+[ -f ~/.ansible/vault.pass ] && \
+    cmd="${cmd} -v ~/.ansible/vault.pass:/root/vault.pass" && \
+    ansible_command="${ansible_command} --vault-id /root/vault.pass"
+
+# pems volume support
+[ ! -z $(docker volume ls --filter 'name=pems_volume' -q) ] && \
+    cmd="${cmd} -v pems_volume:/pems"
+
+# inventory volume support
+[ ! -z $(docker volume ls --filter 'name=inventory_volume' -q) ] && \
+    cmd="${cmd} -v inventory_volume:/inventory"
+
+cmd="${cmd} feydan/ansible ${ansible_command} ${@}"
+
+eval $cmd
