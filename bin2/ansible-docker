@@ -3,7 +3,7 @@
 ansible_command="$1"
 shift
 
-cmd="docker run --rm -it"
+cmd="docker run --rm -it -v $(pwd):/ansible/project"
 
 # ssh support
 [ -f ~/.ssh/id_rsa ] && [ -f ~/.ssh/id_rsa.pub ] && \
@@ -12,6 +12,8 @@ cmd="docker run --rm -it"
 # aws support
 [ -f ~/.aws/credentials ] && \
     cmd="${cmd} -v ~/.aws/credentials:/root/.aws/credentials"
+[ -f ~/.boto ] && \
+    cmd="${cmd} -v ~/.boto:/root/.boto"
 
 # vault password support
 [ -f ~/.ansible/vault.pass ] && \

@@ -11,6 +11,8 @@ ENV BUILD_PACKAGES \
   git \
   python \
   py-boto \
+  py-boto3 \
+  py-botocore \
   py-dateutil \
   py-httplib2 \
   py-jinja2 \
